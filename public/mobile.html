@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#06060c">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="StickFight">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <title>StickFight Arena — Controller</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/mobile.css">
+</head>
+<body class="mobile">
+  <!-- SPLASH -->
+  <div id="splash" class="screen active">
+    <canvas id="splashCanvas" width="360" height="440"></canvas>
+    <div class="stxt">STICKFIGHT <span class="neon-gold">ARENA</span></div>
+    <div class="badge" id="splashBadge">🎮 CONTROLLER</div>
+  </div>
+
+  <!-- HOME -->
+  <div id="home" class="screen">
+    <div class="home-logo">🥊 STICKFIGHT<br><small>ARENA · CONTROLLER</small></div>
+    <button class="btn home-big" id="joinBtn">🎮 JOIN GAME</button>
+    <button class="btn home-btn secondary" id="howBtn">📖 HOW TO PLAY</button>
+    <button class="btn home-btn secondary" id="settingsHomeBtn">⚙️ SETTINGS</button>
+    <div class="home-footer">
+      <span id="connStatus">connecting…</span><br>
+      v1.0 · no account needed
+    </div>
+  </div>
+
+  <!-- PAIRING -->
+  <div id="pairing" class="screen">
+    <div class="pair-title">JOIN A GAME</div>
+    <div class="pair-sub">Enter the room code shown on the big screen</div>
+    <input class="code-input" id="codeInput" placeholder="AAA-111" maxlength="7" autocapitalize="characters" autocomplete="off" inputmode="text">
+    <button class="btn gold" id="enterBtn" style="width:min(320px,84vw);">ENTER CODE</button>
+    <div class="pair-or">OR</div>
+    <div class="pair-row">
+      <button class="btn pair-btn" id="scanBtn">📷 SCAN QR</button>
+      <button class="btn pair-btn" id="nearbyBtn">🔗 AUTO-DETECT</button>
+    </div>
+    <div class="pair-row" style="width:min(320px,84vw);">
+      <input class="code-input" id="serverInput" placeholder="http://192.168.1.10:3000" style="font-size:14px;letter-spacing:1px;width:100%;">
+    </div>
+    <div class="nearby-list" id="nearbyList"></div>
+    <button class="btn ghost small" id="backHomeBtn" style="margin-top:6px;">← BACK</button>
+  </div>
+
+  <!-- QR SCANNER -->
+  <div id="scanBox">
+    <video id="scanVideo" playsinline muted></video>
+    <div id="scanOverlay"><div class="frame"></div></div>
+    <button class="btn small close" id="scanClose">✕ CLOSE</button>
+  </div>
+
+  <!-- CHARACTER SELECT -->
+  <div id="charselect" class="screen">
+    <div class="cs-title">CHOOSE YOUR FIGHTER</div>
+    <div class="cs-grid" id="csGrid"></div>
+    <button class="btn gold cs-lock-btn" id="lockBtn">🔒 LOCK IN</button>
+    <div class="cs-locked-note" id="csNote"></div>
+  </div>
+
+  <!-- CONTROLLER -->
+  <div id="controller" class="screen">
+    <div class="c-status mirror">
+      <span class="pname" id="cPname">P1</span>
+      <div class="hp"><div class="hpbar"><div class="fill" id="cHp"></div></div></div>
+      <span class="combo" id="cCombo">0</span>
+      <span class="ping" id="cPing">—</span>
+    </div>
+    <div class="zone mirror" id="zoneLeft"></div>
+    <div class="zone mirror" id="zoneGesture">
+      <div class="gesture-hint">SWIPE<br>↑ JUMP · ↓ SLIDE<br>→ DASH · ⟲ SPIN<br>2-TAP TAUNT · SHAKE RAGE</div>
+    </div>
+    <div class="zone mirror" id="zoneRight"></div>
+
+    <div class="joystick-base mirror" id="joyBase"><div class="joystick-knob" id="joyKnob"></div></div>
+
+    <div class="abxy mirror">
+      <div class="aby Y" id="btnY">Y</div>
+      <div class="aby X" id="btnX">X</div>
+      <div class="aby B" id="btnB">B</div>
+      <div class="aby A" id="btnA">A</div>
+      <div class="aby RB" id="btnRB">RB</div>
+    </div>
+
+    <div class="action-row mirror">
+      <div class="action-btn block" id="btnBlock"><span class="ic">🛡️</span>BLOCK</div>
+      <div class="action-btn grab" id="btnGrab"><span class="ic">🤏</span>GRAB</div>
+      <div class="action-btn special" id="btnSpecial"><span class="ic">✨</span>SPECIAL<div class="meter-dots" id="specDots"></div></div>
+      <div class="action-btn dash" id="btnDash"><span class="ic">💨</span>DASH</div>
+    </div>
+
+    <div class="util-row mirror">
+      <button class="util-btn" id="emoteBtn">😤</button>
+      <button class="util-btn" id="pauseBtn">⏸</button>
+      <button class="util-btn" id="settingsBtn">⚙️</button>
+    </div>
+  </div>
+
+  <!-- SETTINGS SHEET -->
+  <div id="settings">
+    <div class="settings-title">⚙️ SETTINGS</div>
+    <div class="setting-row"><span class="lbl">LEFT-HANDED MODE</span><div class="toggle" id="setLefty"></div></div>
+    <div class="setting-row"><span class="lbl">BUTTON SIZE</span>
+      <div class="seg-btns size-row">
+        <div class="seg" data-size="0.8">S</div><div class="seg on" data-size="1">M</div><div class="seg" data-size="1.2">L</div>
+      </div>
+    </div>
+    <div class="setting-row"><span class="lbl">HAPTICS</span>
+      <div class="seg-btns">
+        <div class="seg" data-haptic="0">OFF</div><div class="seg" data-haptic="0.35">LOW</div><div class="seg on" data-haptic="0.7">MED</div><div class="seg" data-haptic="1">HIGH</div>
+      </div>
+    </div>
+    <div class="setting-row"><span class="lbl">GESTURES</span><div class="toggle on" id="setGestures"></div></div>
+    <div class="setting-row"><span class="lbl">CONTROLLER OPACITY</span>
+      <div class="seg-btns">
+        <div class="seg" data-opacity="0.55">LOW</div><div class="seg on" data-opacity="0.85">MID</div><div class="seg" data-opacity="1">FULL</div>
+      </div>
+    </div>
+    <div class="setting-row"><span class="lbl">SOUND EFFECTS</span><div class="toggle on" id="setSound"></div></div>
+    <button class="btn ghost small" id="closeSettings">← DONE</button>
+  </div>
+
+  <!-- TOURNAMENT WAITING -->
+  <div id="waiting" class="screen">
+    <div class="spec-title">🏆 TOURNAMENT</div>
+    <div class="spec-sub" id="waitStatus">Loading bracket…</div>
+    <div class="wait-bracket" id="waitBracket"></div>
+    <div class="wait-you" id="waitYou"></div>
+  </div>
+
+  <!-- SPECTATOR -->
+  <div id="spectate" class="screen">
+    <div class="spec-title">👀 WATCHING</div>
+    <div class="spec-sub">The fight is live — react with emotes!</div>
+    <div class="spec-hps">
+      <div class="spec-p">
+        <div class="spec-name neon-red" id="specP1">P1</div>
+        <div class="spec-bar"><div class="spec-fill red" id="specHp1"></div></div>
+      </div>
+      <div class="spec-vs">VS</div>
+      <div class="spec-p">
+        <div class="spec-name neon-blue" id="specP2">P2</div>
+        <div class="spec-bar"><div class="spec-fill blue" id="specHp2"></div></div>
+      </div>
+    </div>
+    <div class="spec-round" id="specRound">ROUND 1</div>
+    <div class="spec-emotes">
+      <button class="spec-emo" data-e="🔥">🔥</button>
+      <button class="spec-emo" data-e="👏">👏</button>
+      <button class="spec-emo" data-e="😱">😱</button>
+      <button class="spec-emo" data-e="💀">💀</button>
+      <button class="spec-emo" data-e="❤️">❤️</button>
+      <button class="spec-emo" data-e="🤡">🤡</button>
+      <button class="spec-emo" data-e="😈">😈</button>
+      <button class="spec-emo" data-e="🥊">🥊</button>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result" class="screen">
+    <div class="result-title" id="resTitle">VICTORY</div>
+    <div class="result-sub" id="resSub"></div>
+  </div>
+
+  <div id="boot"><div class="ring"></div><div class="txt">CONNECTING…</div></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/vendor-jsqr.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/audio.js"></script>
+  <script src="/js/stickman.js"></script>
+  <script src="/shared/config.js"></script>
+  <script src="/js/controller.js"></script>
+  <script>
+    // PWA installability
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>

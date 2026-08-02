@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ctrl_root"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="@color/bg">
+
+    <!-- status bar -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="44dp"
+        android:orientation="horizontal" android:gravity="center_vertical"
+        android:paddingStart="12dp" android:paddingEnd="12dp" android:background="#0d0d16">
+        <TextView android:id="@+id/ctrl_name" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="P1" android:textColor="#ffffff"
+            android:textSize="13sp" android:textStyle="bold"/>
+        <ProgressBar android:id="@+id/ctrl_hp" style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp" android:layout_weight="1" android:layout_height="10dp"
+            android:layout_marginStart="10dp" android:layout_marginEnd="10dp"
+            android:progressDrawable="@drawable/hp_bar" android:max="100" android:progress="100"/>
+        <TextView android:id="@+id/ctrl_combo" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="" android:textColor="@color/gold"
+            android:textSize="15sp" android:textStyle="bold" android:minWidth="34dp" android:gravity="center"/>
+        <TextView android:id="@+id/ctrl_ping" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="—" android:textColor="@color/muted"
+            android:textSize="11sp" android:layout_marginStart="6dp"/>
+    </LinearLayout>
+
+    <!-- main area -->
+    <FrameLayout android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1">
+        <com.stickfight.arena.JoystickView android:id="@+id/joystick"
+            android:layout_width="180dp" android:layout_height="180dp"
+            android:layout_gravity="bottom|start" android:layout_marginStart="16dp"
+            android:layout_marginBottom="104dp"/>
+        <!-- gesture zone (middle) -->
+        <View android:id="@+id/gesture_zone" android:layout_width="120dp"
+            android:layout_height="match_parent" android:layout_gravity="center_horizontal"/>
+        <!-- ABXY -->
+        <FrameLayout android:id="@+id/abxy" android:layout_width="200dp"
+            android:layout_height="200dp" android:layout_gravity="bottom|end"
+            android:layout_marginEnd="14dp" android:layout_marginBottom="104dp">
+            <TextView android:id="@+id/btnY" android:layout_width="62dp" android:layout_height="62dp"
+                android:layout_gravity="top|start" android:gravity="center" android:text="Y"
+                android:textColor="@color/gold" android:textSize="20sp" android:textStyle="bold"
+                android:background="@drawable/btn_circle"/>
+            <TextView android:id="@+id/btnX" android:layout_width="62dp" android:layout_height="62dp"
+                android:layout_gravity="bottom|start" android:gravity="center" android:text="X"
+                android:textColor="@color/p2" android:textSize="20sp" android:textStyle="bold"
+                android:background="@drawable/btn_circle"/>
+            <TextView android:id="@+id/btnB" android:layout_width="62dp" android:layout_height="62dp"
+                android:layout_gravity="top|end" android:gravity="center" android:text="B"
+                android:textColor="@color/p1" android:textSize="20sp" android:textStyle="bold"
+                android:background="@drawable/btn_circle"/>
+            <TextView android:id="@+id/btnA" android:layout_width="62dp" android:layout_height="62dp"
+                android:layout_gravity="bottom|end" android:gravity="center" android:text="A"
+                android:textColor="@color/green" android:textSize="20sp" android:textStyle="bold"
+                android:background="@drawable/btn_circle"/>
+        </FrameLayout>
+    </FrameLayout>
+
+    <!-- action row -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="66dp"
+        android:orientation="horizontal" android:padding="8dp" android:gravity="center">
+        <TextView android:id="@+id/btn_block" android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="54dp" android:layout_marginEnd="4dp" android:gravity="center"
+            android:text="🛡️ BLOCK" android:textColor="#ffffff" android:textSize="12sp"
+            android:textStyle="bold" android:background="@drawable/btn_action"/>
+        <TextView android:id="@+id/btn_grab" android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="54dp" android:layout_marginEnd="4dp" android:gravity="center"
+            android:text="🤏 GRAB" android:textColor="#ffffff" android:textSize="12sp"
+            android:textStyle="bold" android:background="@drawable/btn_action"/>
+        <TextView android:id="@+id/btn_special" android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="54dp" android:layout_marginEnd="4dp" android:gravity="center"
+            android:text="✨ SPECIAL" android:textColor="@color/gold" android:textSize="12sp"
+            android:textStyle="bold" android:background="@drawable/btn_action"/>
+        <TextView android:id="@+id/btn_dash" android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="54dp" android:gravity="center"
+            android:text="💨 DASH" android:textColor="@color/teal" android:textSize="12sp"
+            android:textStyle="bold" android:background="@drawable/btn_action"/>
+    </LinearLayout>
+
+    <!-- util row -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="52dp"
+        android:orientation="horizontal" android:gravity="center" android:paddingBottom="6dp">
+        <TextView android:id="@+id/btn_emote" android:layout_width="54dp" android:layout_height="40dp"
+            android:layout_marginEnd="10dp" android:gravity="center" android:text="😤"
+            android:textSize="18sp" android:background="@drawable/btn_panel"/>
+        <TextView android:id="@+id/btn_pause" android:layout_width="54dp" android:layout_height="40dp"
+            android:layout_marginEnd="10dp" android:gravity="center" android:text="⏸"
+            android:textSize="16sp" android:background="@drawable/btn_panel"/>
+        <TextView android:id="@+id/btn_settings" android:layout_width="54dp" android:layout_height="40dp"
+            android:gravity="center" android:text="⚙️" android:textSize="16sp"
+            android:background="@drawable/btn_panel"/>
+    </LinearLayout>
+</LinearLayout>

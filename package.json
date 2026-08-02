@@ -1,0 +1,30 @@
+{
+  "name": "stickfight-arena",
+  "version": "2.0.0",
+  "description": "StickFight Arena — 2.5D browser fighting game. React website + native Android controller app (Java + Kotlin) + Node.js server.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "PORT=3000 node server.js",
+    "build:web": "cd web && npm ci && npm run build",
+    "apk": "cd android-app && ./gradlew assembleDebug && cp app/build/outputs/apk/debug/app-debug.apk ../dist/StickFight-Arena-Android-v1.0.apk",
+    "test": "node test/e2e.js",
+    "test:tournament": "node test/tournament.js",
+    "test:browser": "node test/browser.js",
+    "test:btournament": "node test/browser-tournament.js",
+    "test:keyboard": "node test/browser-keyboard.js",
+    "shots": "node test/browser.js"
+  },
+  "keywords": ["game", "fighting", "socket.io", "multiplayer", "react", "android", "controller"],
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "jsqr": "^1.4.0",
+    "qrcode": "^1.5.4",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5"
+  },
+  "devDependencies": {
+    "puppeteer": "^23.0.0"
+  }
+}

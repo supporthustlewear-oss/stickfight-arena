@@ -1,0 +1,11 @@
+node_modules/
+web/node_modules/
+web/dist/
+android-app/.gradle/
+android-app/app/build/
+android-app/build/
+android-app/.idea/
+shots/
+data/
+*.log
+.DS_Store

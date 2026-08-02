@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp" android:layout_height="wrap_content"
+    android:layout_margin="5dp" android:layout_columnWeight="1"
+    android:orientation="vertical" android:gravity="center"
+    android:padding="10dp" android:background="@drawable/btn_panel">
+    <TextView android:id="@+id/cell_emoji" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:textSize="30sp"/>
+    <TextView android:id="@+id/cell_name" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:textSize="12sp" android:textStyle="bold"
+        android:letterSpacing="0.1" android:layout_marginTop="2dp"/>
+    <TextView android:id="@+id/cell_style" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:textSize="10sp" android:textColor="@color/muted"/>
+</LinearLayout>

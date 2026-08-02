@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StickFight Arena — Game Screen</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥊</text></svg>">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/game.css">
+</head>
+<body class="game">
+  <!-- arena -->
+  <canvas id="arenaCanvas"></canvas>
+  <div class="vignette"></div>
+
+  <!-- HUD -->
+  <div id="hud" class="screen">
+    <div class="hud-top">
+      <div class="hud-panel">
+        <div class="hud-name"><span class="neon-red">P1</span><span id="c1" class="combo"></span></div>
+        <div class="hud-bar p1"><div class="ghost" id="hp1g"></div><div class="fill" id="hp1"></div></div>
+        <div class="hud-meter" id="m1"></div>
+      </div>
+      <div class="hud-center">
+        <div class="hud-round" id="roundLabel">ROUND 1</div>
+        <div class="hud-pips" id="pips"></div>
+        <div class="hud-timer" id="timer">90</div>
+      </div>
+      <div class="hud-panel hud-p2">
+        <div class="hud-name"><span id="c2" class="combo"></span><span class="neon-blue">P2</span></div>
+        <div class="hud-bar p2"><div class="ghost" id="hp2g"></div><div class="fill" id="hp2"></div></div>
+        <div class="hud-meter" id="m2"></div>
+      </div>
+    </div>
+    <div class="combo-pop l" id="comboL"><span id="comboLv">5</span><span class="lbl" id="comboLlbl"></span></div>
+    <div class="combo-pop r" id="comboR"><span id="comboRv">5</span><span class="lbl" id="comboRlbl"></span></div>
+    <div class="arena-tag" id="arenaTag"></div>
+    <div id="banner"><div class="btext" id="bannerText"></div></div>
+    <div class="hud-bottom">
+      <div id="statusP1"><span class="dot"></span> P1 <span id="nameP1">—</span> · <span id="pingP1">—</span></div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <span id="arenaName" style="letter-spacing:3px;">—</span>
+        <button class="mini-btn" id="muteBtn" title="Mute (M)">🔊</button>
+        <button class="mini-btn" id="fsBtn" title="Fullscreen (F11)">⛶</button>
+        <button class="mini-btn" id="helpBtn" title="Controls">❓</button>
+      </div>
+      <div id="statusP2"><span class="dot"></span> P2 <span id="nameP2">—</span> · <span id="pingP2">—</span></div>
+    </div>
+    <div id="pausedOverlay" style="display:none;">PAUSED</div>
+  </div>
+
+  <!-- LOBBY -->
+  <div id="lobby" class="screen active">
+    <div class="lobby-title">HOSTING <span class="neon-gold">STICKFIGHT</span> ARENA</div>
+    <div class="lobby-row">
+      <div class="lobby-qr" id="qrBox"><div style="width:230px;height:230px;display:flex;align-items:center;justify-content:center;color:#999;font-family:var(--font-head);font-size:11px;">generating…</div></div>
+      <div style="text-align:center;">
+        <div style="color:var(--muted);letter-spacing:3px;font-size:12px;font-family:var(--font-head);margin-bottom:10px;">ROOM CODE</div>
+        <div class="lobby-code" id="roomCode">———</div>
+        <div style="color:var(--muted);font-size:13px;margin-top:12px;letter-spacing:1px;">Scan with the <b style="color:var(--p2)">mobile app</b> or type the code</div>
+      </div>
+    </div>
+    <div class="lobby-row" id="lobbySlots"></div>
+    <div class="lobby-row" id="botRow"></div>
+    <div class="lobby-row">
+      <button class="btn small" id="modeBtn">🏆 4-PLAYER TOURNAMENT</button>
+      <button class="btn small ghost" id="lbReplayBtn">🎬 LAST REPLAY</button>
+      <button class="btn small ghost" id="lobbyFsBtn">⛶ FULLSCREEN</button>
+      <button class="btn small ghost" id="lobbyHelpBtn">❓ CONTROLS</button>
+    </div>
+    <button class="btn gold" id="quickStartBtn" style="font-size:16px;padding:16px 34px;">🎮 QUICK START — PC + BOTS</button>
+    <div class="lobby-hint">
+      Everyone watches on this screen.<br>
+      <b>1.</b> Open <b>stickfightarena.com/mobile</b> on phones &nbsp; <b>2.</b> Enter the code &nbsp; <b>3.</b> Pick fighters<br>
+      Guests can also join to <b>watch &amp; react</b> once the match starts.
+    </div>
+  </div>
+
+  <!-- CHARACTER SELECT -->
+  <div id="charselect" class="screen">
+    <div class="cs-title">⚔️ SELECT YOUR <span>FIGHTER</span> ⚔️</div>
+    <div class="cs-bracket-wrap"><div id="csBracket"></div></div>
+    <div class="cs-pick" id="csGrid"></div>
+    <div class="cs-status" id="csStatus"></div>
+    <div class="cs-arena-row">
+      <span style="color:var(--muted);font-family:var(--font-head);font-size:12px;letter-spacing:2px;">ARENA:</span>
+      <select id="arenaSelect" class="btn small"></select>
+      <span id="arenaPreview" style="font-size:20px;"></span>
+    </div>
+    <div class="cs-start">
+      <div class="hint" id="csHint">Waiting for fighters to pick…</div>
+      <button class="btn gold" id="startBtn" disabled style="font-size:17px;padding:16px 44px;">⚡ START FIGHT</button>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result" class="screen">
+    <div class="result-title" id="resTitle">VICTORY</div>
+    <div class="result-sub" id="resSub"></div>
+    <div class="result-score" id="resScore"></div>
+    <div class="result-bracket" id="resBracket"></div>
+    <div class="result-stats" id="resStats"></div>
+    <div class="result-actions">
+      <button class="btn gold" id="rematchBtn">🔄 REMATCH</button>
+      <button class="btn" id="replayBtn" style="display:none;">🎬 WATCH REPLAY</button>
+      <button class="btn" id="lobbyBtn">🏠 LOBBY</button>
+    </div>
+    <div class="result-lb-hint" id="resLbHint"></div>
+  </div>
+
+  <!-- REPLAY BAR -->
+  <div id="replayBar">
+    <span id="rpTitle">▶ REPLAY</span>
+    <span id="rpNames"></span>
+    <span id="rpTime"></span>
+    <button class="btn small ghost" id="rpPause">⏸</button>
+    <button class="btn small ghost" id="rpExit">✕</button>
+  </div>
+
+  <div id="boot"><div class="ring"></div><div class="txt">CONNECTING TO SERVER…</div></div>
+
+  <!-- CONTROLS OVERLAY (console help) -->
+  <div id="controlsHelp" class="screen">
+    <div class="ch-title">🎮 CONTROLS</div>
+    <div class="ch-cols">
+      <div class="ch-col">
+        <div class="ch-head">KEYBOARD — P1</div>
+        <div class="ch-row"><b>W A S D / ← ↑ ↓ →</b><span>Move · jump · crouch</span></div>
+        <div class="ch-row"><b>J · K · L</b><span>Light · Kick · Heavy</span></div>
+        <div class="ch-row"><b>U · O</b><span>Special · Ultimate</span></div>
+        <div class="ch-row"><b>SHIFT · CTRL</b><span>Block · Dash</span></div>
+        <div class="ch-row"><b>E · R (hold)</b><span>Grab · Charge</span></div>
+        <div class="ch-row"><b>SPACE · Q · F</b><span>Jump · Taunt · Rage</span></div>
+        <div class="ch-row"><b>P · M</b><span>Pause · Mute</span></div>
+      </div>
+      <div class="ch-col">
+        <div class="ch-head">GAMEPAD — P1 &amp; P2</div>
+        <div class="ch-row"><b>Left stick / D-pad</b><span>Move</span></div>
+        <div class="ch-row"><b>A · B · X · Y</b><span>Light · Kick · Heavy · Special</span></div>
+        <div class="ch-row"><b>LB · RB</b><span>Block · Charge (hold)</span></div>
+        <div class="ch-row"><b>LT / RT</b><span>Dash · Grab</span></div>
+        <div class="ch-row"><b>Select · Start</b><span>Rage · Pause</span></div>
+      </div>
+      <div class="ch-col">
+        <div class="ch-head">PHONE — CONTROLLER</div>
+        <div class="ch-row"><b>Joystick</b><span>Move · jump · crouch</span></div>
+        <div class="ch-row"><b>A B X Y · RB</b><span>Attacks · charge</span></div>
+        <div class="ch-row"><b>Swipe zone</b><span>Jump · slide · dash · spin</span></div>
+        <div class="ch-row"><b>Shake</b><span>Rage mode</span></div>
+      </div>
+    </div>
+    <button class="btn gold" id="chClose">LET'S FIGHT</button>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/audio.js"></script>
+  <script src="/js/stickman.js"></script>
+  <script src="/shared/config.js"></script>
+  <script src="/shared/sim.js"></script>
+  <script src="/js/render.js"></script>
+  <script src="/js/game.js"></script>
+</body>
+</html>

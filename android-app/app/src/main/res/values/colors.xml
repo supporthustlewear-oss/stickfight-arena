@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg">#0a0a0a</color>
+    <color name="panel">#12121a</color>
+    <color name="panel2">#181826</color>
+    <color name="p1">#ff2d2d</color>
+    <color name="p2">#2d9cff</color>
+    <color name="gold">#ffd700</color>
+    <color name="white">#ffffff</color>
+    <color name="muted">#8b8fa3</color>
+    <color name="line">#22ffffff</color>
+    <color name="green">#3ddc67</color>
+    <color name="purple">#c77dff</color>
+    <color name="teal">#2dd4a0</color>
+</resources>

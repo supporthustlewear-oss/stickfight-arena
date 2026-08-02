@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StickFight Arena — Your Phone Is The Controller</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥊</text></svg>">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/landing.css">
+</head>
+<body class="landing">
+  <div class="landing-wrap">
+
+    <!-- HERO -->
+    <div class="hero">
+      <h1 class="logo">STICKFIGHT<span class="arena">A R E N A</span></h1>
+      <div class="logo-sub">No Buttons. Just Brutality.</div>
+
+      <!-- live demo: two bots fighting (real sim running in browser) -->
+      <canvas id="hero" class="hero-canvas"></canvas>
+
+      <div class="hero-cta">
+        <a href="/game.html"><button class="btn gold" style="font-size:17px;padding:18px 34px;">🎮 HOST GAME</button></a>
+        <a href="/mobile.html"><button class="btn p2" style="font-size:17px;padding:18px 34px;">📱 GET MOBILE APP</button></a>
+      </div>
+      <p class="hero-note">Scan QR → Connect → <b>Fight in 10 seconds.</b> Works on any browser. No login. No install.</p>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <section>
+      <h2 class="section-title">HOW IT WORKS</h2>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><h3>OPEN ON PC / TV</h3><p>Open stickfightarena on any big screen browser.</p></div>
+        <div class="step"><div class="num">2</div><h3>GRAB YOUR PHONE</h3><p>Open the mobile controller app on your phone.</p></div>
+        <div class="step"><div class="num">3</div><h3>SCAN QR / ENTER CODE</h3><p>Pair with a memorable code like <b>SKY-847</b> — or just scan.</p></div>
+        <div class="step"><div class="num">4</div><h3>CHOOSE YOUR FIGHTER</h3><p>8 unique stickmen, each with specials &amp; ultimates.</p></div>
+        <div class="step"><div class="num">5</div><h3>FIGHT!</h3><p>Your phone becomes a full fight pad: joystick, ABXY, gestures, haptics.</p></div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section>
+      <h2 class="section-title">FEATURES</h2>
+      <div class="features">
+        <div class="feature"><div class="ic">⚡</div><h3>REAL-TIME MULTIPLAYER</h3><p>Socket.io with an authoritative 60Hz server simulation. LAN-tight with <50ms latency and live ping display.</p></div>
+        <div class="feature"><div class="ic">🎮</div><h3>PHONE = FIGHT PAD</h3><p>Virtual joystick, ABXY buttons, block/dash/special/grab, swipe gestures, shake for Rage Mode, haptic feedback on every hit.</p></div>
+        <div class="feature"><div class="ic">🥷</div><h3>8 STICKMAN FIGHTERS</h3><p>Shadow, Blaze, Volt, Titan, Viper, Frost, Ghost, Storm — each with a special move and a screen-shaking ultimate.</p></div>
+        <div class="feature"><div class="ic">🌆</div><h3>6 ARENAS</h3><p>City rooftop, dojo, volcano with lava pits, low-gravity space, bouncy alley walls, underground fight club.</p></div>
+        <div class="feature"><div class="ic">💥</div><h3>DEEP COMBAT</h3><p>Combos with damage multipliers (up to 3x LEGENDARY), perfect blocks, grabs, throws, juggles, meter-based specials.</p></div>
+        <div class="feature"><div class="ic">📱</div><h3>ZERO FRICTION PAIRING</h3><p>6-digit memorable codes, QR scanning, auto-detect nearby games on the same WiFi. Party-ready in seconds.</p></div>
+      </div>
+    </section>
+
+    <!-- LEADERBOARD -->
+    <section>
+      <h2 class="section-title">🏆 GLOBAL LEADERBOARD</h2>
+      <div id="lbWrap" style="max-width:560px;margin:0 auto;">
+        <div style="text-align:center;color:var(--muted);letter-spacing:2px;font-size:13px;padding:24px;">loading…</div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="tag">STICKFIGHT ARENA</div>
+      <div>Your phone is the controller. The screen is the ring.</div>
+      <div style="margin-top:6px;opacity:.6">Server: Node.js + Socket.io &nbsp;•&nbsp; Game: Canvas 2.5D engine &nbsp;•&nbsp; App: React Native / Web controller</div>
+    </footer>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/audio.js"></script>
+  <script src="/js/stickman.js"></script>
+  <script src="/shared/config.js"></script>
+  <script src="/shared/sim.js"></script>
+  <script src="/js/render.js"></script>
+  <script src="/js/landing.js"></script>
+</body>
+</html>
